@@ -34,18 +34,18 @@ RUN apt-get update \
 
 
 #-------------------Uncomment the following steps to install Maven CLI Tools----------------------------------
-ARG MAVEN_VERSION=3.6.3
-ARG MAVEN_SHA=c35a1803a6e70a126e80b2b3ae33eed961f83ed74d18fcd16909b2d44d7dada3203f1ffe726c17ef8dcca2dcaa9fca676987befeadc9b9f759967a8cb77181c0
-RUN mkdir -p /usr/share/maven /usr/share/maven/ref \
-    && export DEBIAN_FRONTEND=noninteractive \
-    && curl -fsSL -o /tmp/apache-maven.tar.gz https://archive.apache.org/dist/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz \
-    && echo "${MAVEN_SHA} /tmp/apache-maven.tar.gz" | sha512sum -c - \
-    && tar -xzf /tmp/apache-maven.tar.gz -C /usr/share/maven --strip-components=1 \
-    && rm -f /tmp/apache-maven.tar.gz \
-    && ln -s /usr/share/maven/bin/mvn /usr/bin/mvn
-COPY maven-settings.xml /usr/share/maven/ref/
-ENV MAVEN_HOME /usr/share/maven
-ENV MAVEN_CONFIG /root/.m2
+# ARG MAVEN_VERSION=3.6.3
+# ARG MAVEN_SHA=c35a1803a6e70a126e80b2b3ae33eed961f83ed74d18fcd16909b2d44d7dada3203f1ffe726c17ef8dcca2dcaa9fca676987befeadc9b9f759967a8cb77181c0
+# RUN mkdir -p /usr/share/maven /usr/share/maven/ref \
+#     && export DEBIAN_FRONTEND=noninteractive \
+#     && curl -fsSL -o /tmp/apache-maven.tar.gz https://archive.apache.org/dist/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz \
+#     && echo "${MAVEN_SHA} /tmp/apache-maven.tar.gz" | sha512sum -c - \
+#     && tar -xzf /tmp/apache-maven.tar.gz -C /usr/share/maven --strip-components=1 \
+#     && rm -f /tmp/apache-maven.tar.gz \
+#     && ln -s /usr/share/maven/bin/mvn /usr/bin/mvn
+# COPY maven-settings.xml /usr/share/maven/ref/
+# ENV MAVEN_HOME /usr/share/maven
+# ENV MAVEN_CONFIG /root/.m2
 #-------------------------------------------------------------------------------------------------------------
 
 
@@ -116,20 +116,20 @@ SHELL ["/bin/sh", "-c"]
 
 
 #---------------------------------------
-# Clean up
-RUN export DEBIAN_FRONTEND=noninteractive \
-    && apt-get autoremove -y \
-    && apt-get clean -y \
-    && rm -rf /var/lib/apt/lists/*
-#---------------------------------------
-
-
-#---------------------------------------
 # Setup OpenShift OC utility
 # ENV OC_URL=https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/openshift-client-linux.tar.gz
 # RUN wget -nv ${OC_URL} -O - | \
 #     tar -zxv -C /usr/local/bin/ oc \
 #     && chmod +x /usr/local/bin/oc
+#---------------------------------------
+
+
+#---------------------------------------
+# Clean up
+RUN export DEBIAN_FRONTEND=noninteractive \
+    && apt-get autoremove -y \
+    && apt-get clean -y \
+    && rm -rf /var/lib/apt/lists/*
 #---------------------------------------
 
 
